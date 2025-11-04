@@ -28,6 +28,10 @@ public class AuthRestController {
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // Asignar rol por defecto si no lo envía
+        if(user.getRole() == null || user.getRole().isEmpty()){
+            user.setRole("ROLE_USER");
+        }
         return ResponseEntity.ok(userRepository.save(user));
     }
 
