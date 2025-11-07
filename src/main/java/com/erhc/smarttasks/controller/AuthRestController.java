@@ -40,8 +40,15 @@ public class AuthRestController {
         try{
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-            String token = jwtUtil.generateToken(user.getUsername());
-            return ResponseEntity.ok("Bearer "+token);
+         // Busca el usuario en la BD para obtener su rol
+            User dbUser = userRepository.findByUsername(user.getUsername())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+            // Genera el token incluyendo username + rol
+            String token = jwtUtil.generateToken(dbUser.getUsername(), dbUser.getRole());
+
+
+            return ResponseEntity.ok("Bearer "+ token);
         } catch (AuthenticationException e){
             return ResponseEntity.status(401).body("Invalid username or password");
         }

@@ -22,6 +22,7 @@ public class FacturacionServiceImpl implements FacturacionService {
         ComprobantePago c = new ComprobantePago();
         c.setSerie("BOLETA");
         c.setNumero("B001");
+        c.setTipo("BOLETA");
         c.setNumero(UUID.randomUUID().toString().substring(0,8));
         c.setTotal(pago.getAmount());
         c.setCustomerName(pago.getPayer() != null ? pago.getPayer().getUsername() : "Cliente");

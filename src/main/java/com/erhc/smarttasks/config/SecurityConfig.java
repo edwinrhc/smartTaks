@@ -34,6 +34,7 @@ public class SecurityConfig {
                         // Solo ADMIN puede listar o eliminar usuarios
                         .requestMatchers("/api/users/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/payments/create").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/payments/simulate").hasRole("ADMIN")
                         // Los usuarios autenticados puede acceder a los endpoints
                         .anyRequest().authenticated()
                 )
